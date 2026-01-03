@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SILVER TRUTH | Exposing Market Manipulation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --silver: #C0C0C0;
+            --silver-dark: #8a8a8a;
+            --silver-light: #e8e8e8;
+            --blood-red: #8B0000;
+            --warning-red: #dc2626;
+            --deep-black: #0a0a0a;
+            --paper-cream: #f5f0e6;
+        }
+
+```
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: var(--deep-black);
+        color: var(--silver-light);
+        font-family: 'Source Serif 4', Georgia, serif;
+        overflow-x: hidden;
+    }
+
+    /* HERO SECTION */
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        background: 
+            radial-gradient(ellipse at 30% 20%, rgba(192, 192, 192, 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 80%, rgba(192, 192, 192, 0.05) 0%, transparent 40%),
+            linear-gradient(180deg, var(--deep-black) 0%, #111 100%);
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.03;
+        pointer-events: none;
+    }
+
+    .urgent-alert {
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        color: var(--warning-red);
+        letter-spacing: 0.1em;
+        margin-bottom: 2rem;
+        animation: urgentPulse 0.8s infinite;
+        text-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+    }
+
+    @keyframes urgentPulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.02); }
+    }
+
+    .hero-badge {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        border: 1px solid var(--blood-red);
+        color: var(--warning-red);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+    }
+
+    .hero h1 {
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: clamp(4rem, 15vw, 12rem);
+        line-height: 0.85;
+        letter-spacing: -0.02em;
+        background: linear-gradient(180deg, var(--silver-light) 0%, var(--silver) 40%, var(--silver-dark) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 60px rgba(192, 192, 192, 0.3);
+    }
+
+    .hero-subtitle {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: clamp(0.9rem, 2vw, 1.1rem);
+        color: var(--silver-dark);
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        margin-bottom: 3rem;
+    }
+
+    .current-price {
+        background: linear-gradient(135deg, rgba(192, 192, 192, 0.1) 0%, rgba(192, 192, 192, 0.05) 100%);
+        border: 1px solid rgba(192, 192, 192, 0.2);
+        padding: 2rem 3rem;
+        margin-bottom: 3rem;
+    }
+
+    .price-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        color: var(--silver-dark);
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+    }
+
+    .price-value {
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: 4rem;
+        color: var(--silver);
+    }
+
+    .price-change {
+        color: #22c55e;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1rem;
+    }
+
+    .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--silver-dark);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    .scroll-indicator svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* SECTIONS */
+    section {
+        padding: 6rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .section-number {
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: 5rem;
+        color: var(--silver-dark);
+        opacity: 0.3;
+        line-height: 1;
+    }
+
+    .section-title {
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        color: var(--silver);
+        letter-spacing: 0.02em;
+    }
+
+    .content-block {
+        background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(15, 15, 15, 0.95) 100%);
+        border-left: 3px solid var(--silver-dark);
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .content-block p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--silver-light);
+        margin-bottom: 1rem;
+    }
+
+    .content-block p:last-child {
+        margin-bottom: 0;
+    }
+
+    /* TIMELINE */
+    .timeline {
+        position: relative;
+        padding-left: 3rem;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(180deg, var(--silver) 0%, var(--silver-dark) 100%);
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-bottom: 3rem;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -3rem;
+        top: 0.5rem;
+        width: 12px;
+        height: 12px;
+        background: var(--silver);
+        border-radius: 50%;
+        transform: translateX(-5px);
+    }
+
+    .timeline-year {
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: 2rem;
+        color: var(--silver);
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-event {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--silver-light);
+    }
+
+    /* ACCUSATION SECTION */
+    .accusation-section {
+        background: linear-gradient(135deg, rgba(139, 0, 0, 0.15) 0%, rgba(10, 10, 10, 1) 100%);
+        border: 1px solid rgba(139, 0, 0, 0.3);
+        padding: 4rem 2rem;
+        margin: 4rem 0;
+        position: relative;
+    }
+
+    .accusation-section::before {
+        content: 'DOCUMENTED';
+        position: absolute;
+        top: -0.7rem;
+        left: 2rem;
+        background: var(--deep-black);
+        padding: 0 1rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        color: var(--warning-red);
+    }
+
+    .big-quote {
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        color: var(--silver);
+        line-height: 1.3;
+        margin-bottom: 1.5rem;
+    }
+
+    .quote-source {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        color: var(--silver-dark);
+        letter-spacing: 0.1em;
+    }
+
+    /* STATS GRID */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 3rem 0;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, rgba(192, 192, 192, 0.08) 0%, rgba(192, 192, 192, 0.02) 100%);
+        border: 1px solid rgba(192, 192, 192, 0.15);
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+        border-color: var(--silver);
+        transform: translateY(-5px);
+    }
+
+    .stat-value {
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: 3rem;
+        color: var(--silver);
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--silver-dark);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    /* MANIPULATION SECTION */
+    .manipulation-card {
+        background: #111;
+        border: 1px solid rgba(192, 192, 192, 0.2);
+        margin-bottom: 2rem;
+        overflow: hidden;
+    }
+
+    .manipulation-header {
+        background: linear-gradient(90deg, rgba(139, 0, 0, 0.3) 0%, transparent 100%);
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid rgba(192, 192, 192, 0.1);
+    }
+
+    .manipulation-title {
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: 1.5rem;
+        color: var(--silver);
+    }
+
+    .manipulation-body {
+        padding: 2rem;
+    }
+
+    .manipulation-body p {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--silver-light);
+    }
+
+    /* CALL TO ACTION */
+    .cta-section {
+        text-align: center;
+        padding: 6rem 2rem;
+        background: linear-gradient(180deg, transparent 0%, rgba(192, 192, 192, 0.05) 50%, transparent 100%);
+    }
+
+    .cta-title {
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        color: var(--silver);
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-text {
+        font-size: 1.2rem;
+        color: var(--silver-light);
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        line-height: 1.7;
+    }
+
+    .share-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .share-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        background: transparent;
+        border: 2px solid var(--silver);
+        color: var(--silver);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.85rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .share-btn:hover {
+        background: var(--silver);
+        color: var(--deep-black);
+    }
+
+    /* FOOTER */
+    footer {
+        border-top: 1px solid rgba(192, 192, 192, 0.1);
+        padding: 3rem 2rem;
+        text-align: center;
+    }
+
+    .footer-text {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--silver-dark);
+        letter-spacing: 0.1em;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.8;
+    }
+
+    .footer-links {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .footer-links a {
+        color: var(--silver-dark);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: var(--silver);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .section-number {
+            font-size: 3rem;
+        }
+
+        .timeline {
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            left: -2rem;
+        }
+
+        .current-price {
+            padding: 1.5rem;
+        }
+
+        .price-value {
+            font-size: 3rem;
+        }
+    }
+
+    /* SPECIAL ELEMENTS */
+    .highlight {
+        color: var(--warning-red);
+        font-weight: 600;
+    }
+
+    .silver-text {
+        color: var(--silver);
+        font-weight: 600;
+    }
+
+    mark {
+        background: rgba(192, 192, 192, 0.2);
+        color: var(--silver);
+        padding: 0.1em 0.3em;
+    }
+
+    .divider {
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, var(--silver-dark) 50%, transparent 100%);
+        margin: 4rem 0;
+    }
+</style>
+```
+
+</head>
+<body>
+    <!-- HERO -->
+    <header class="hero">
+        <div class="urgent-alert">SILVER SQUEEZING!!!</div>
+        <h1>SILVER<br>TRUTH</h1>
+        <p class="hero-subtitle">The Story They Don't Want You to Know</p>
+
+```
+    <div class="current-price">
+        <div class="price-label">Current Spot Price (Jan 2, 2026)</div>
+        <div class="price-value">$73.56</div>
+        <div class="price-change">▲ +148% in 2025</div>
+    </div>
+
+    <div class="scroll-indicator">
+        <span>SCROLL TO LEARN</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M19 12l-7 7-7-7"/>
+        </svg>
+    </div>
+</header>
+
+<!-- SECTION 1: HISTORY -->
+<section>
+    <div class="section-header">
+        <span class="section-number">01</span>
+        <h2 class="section-title">5,000 Years of Silver</h2>
+    </div>
+
+    <div class="content-block">
+        <p>For over 5,000 years, silver has served as humanity's primary medium of exchange. More transactions throughout history have been conducted in silver than in any other form of money. From ancient Mesopotamia to the founding of America, silver was real money.</p>
+        <p>The Coinage Act of 1792 established silver as legal tender in the United States. A silver dollar contained 371.25 grains of pure silver. This wasn't arbitrary—it was a promise backed by physical metal.</p>
+    </div>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-year">1792</div>
+            <div class="timeline-event">The Coinage Act establishes the U.S. Mint and defines the dollar in terms of silver. America operates on a bimetallic standard.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1873</div>
+            <div class="timeline-event">The "Crime of '73"—Congress ends free coinage of silver, devastating farmers and debtors. The silver standard begins its death.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1934</div>
+            <div class="timeline-event">Silver hits its lowest price in history: <span class="highlight">$0.24 per ounce</span> during the Great Depression. The Silver Purchase Act forces Treasury to buy silver.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1964</div>
+            <div class="timeline-event">The U.S. mints its last 90% silver coins. Rising prices make silver too valuable for everyday coinage. End of an era.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1971</div>
+            <div class="timeline-event">Nixon closes the gold window. The dollar becomes pure fiat currency. Precious metals begin their journey as "alternative" assets.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1980</div>
+            <div class="timeline-event"><span class="silver-text">Silver Thursday.</span> Price peaks at $49.45/oz amid Hunt Brothers controversy. COMEX changes the rules mid-game with "Silver Rule 7."</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2011</div>
+            <div class="timeline-event">Silver nearly touches $50 again during quantitative easing fears. Three decades later, the same resistance level holds.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2020</div>
+            <div class="timeline-event">CFTC orders JPMorgan to pay <span class="highlight">$920 million</span>—the largest penalty in CFTC history—for precious metals manipulation.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2025</div>
+            <div class="timeline-event">Silver breaks all-time highs, surging 148% in a single year. Reports emerge of major banks unwinding short positions.</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 2: THE MANIPULATION -->
+<section>
+    <div class="section-header">
+        <span class="section-number">02</span>
+        <h2 class="section-title">The Manipulation Machine</h2>
+    </div>
+
+    <div class="accusation-section">
+        <p class="big-quote">"From at least 2008 through 2016, JPM placed hundreds of thousands of orders to buy or sell gold, silver, platinum, palladium, Treasury note, and Treasury bond futures contracts with the intent to cancel those orders prior to execution."</p>
+        <p class="quote-source">— CFTC Enforcement Order, September 29, 2020</p>
+    </div>
+
+    <div class="manipulation-card">
+        <div class="manipulation-header">
+            <h3 class="manipulation-title">Spoofing: The Deceptive Practice</h3>
+        </div>
+        <div class="manipulation-body">
+            <p>Spoofing involves placing large orders with no intention of executing them. Traders place massive sell orders to create an artificial ceiling on prices, then cancel before execution. This sends false signals of supply to the market, deceiving other participants. In 2023, two former JPMorgan precious metals traders—Michael Nowak and Gregg Smith—were convicted of price manipulation and spoofing as part of a broader market-rigging scheme, resulting in fines and prison sentences.</p>
+        </div>
+    </div>
+
+    <div class="manipulation-card">
+        <div class="manipulation-header">
+            <h3 class="manipulation-title">Paper Silver vs. Physical Silver</h3>
+        </div>
+        <div class="manipulation-body">
+            <p>For every ounce of physical silver that exists, estimates suggest there are 100-400 "paper" ounces in derivatives. Bullion banks flood the market with paper contracts, creating artificial supply that doesn't exist in the real world. This disconnects the futures price from physical reality. When someone demands actual delivery, the system strains.</p>
+        </div>
+    </div>
+
+    <div class="manipulation-card">
+        <div class="manipulation-header">
+            <h3 class="manipulation-title">The Morning Slam Pattern</h3>
+        </div>
+        <div class="manipulation-body">
+            <p>Analysis of silver trading patterns from 2007-2025 reveals a consistent phenomenon: sharp price drops during New York morning trading hours, followed by recoveries in afternoon and overnight sessions as Asian and European markets open. This pattern—visible across thousands of trading days—bears the fingerprints of coordinated intervention rather than organic market behavior.</p>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">$920M</div>
+            <div class="stat-label">JPMorgan CFTC Fine (2020)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">8+ Years</div>
+            <div class="stat-label">Duration of Documented Spoofing</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">100,000s</div>
+            <div class="stat-label">Manipulative Orders Placed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">40%</div>
+            <div class="stat-label">JPM COMEX Futures Control</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 3: THE CURRENT CRISIS -->
+<section>
+    <div class="section-header">
+        <span class="section-number">03</span>
+        <h2 class="section-title">The 2025-2026 Squeeze</h2>
+    </div>
+
+    <div class="content-block">
+        <p>Something extraordinary happened in 2025. Silver rose <span class="highlight">148%</span>—its best year since 1979. The metal broke through $80 per ounce, smashing through decades of resistance. But the story beneath the surface is even more significant.</p>
+        <p>Reports indicate that JPMorgan, after years of being the largest short in the silver market, has reversed position. Between June and October 2025, they reportedly closed their 200-million-ounce paper short position and accumulated 750 million ounces of physical silver—the largest stockpile in history.</p>
+    </div>
+
+    <div class="accusation-section">
+        <p class="big-quote">"JPMorgan Chase & Co., in mandatory disclosures, revealed it is on the hook to deliver more than 5,900 tons of silver it doesn't have."</p>
+        <p class="quote-source">— DCReport Investigation, December 2025</p>
+    </div>
+
+    <div class="content-block">
+        <p><strong>The Supply Crisis:</strong> Global above-ground silver supply is dwindling. LBMA and COMEX registered inventories have dropped over 70% since 2020. Meanwhile, industrial demand from solar panels, electric vehicles, and electronics continues to surge. China is implementing export licenses on silver starting January 2026.</p>
+        <p><strong>The Short Squeeze Setup:</strong> Banks that leased silver from JPMorgan to short at lower prices are now being forced to buy back at much higher prices. Some analysts suggest other major banks (HSBC, UBS, Goldman Sachs) may face similar margin pressures. The CME has raised margin requirements multiple times in recent weeks.</p>
+        <p><strong>Physical vs. Paper Divergence:</strong> Reports from late December 2025 show physical silver trading at significant premiums over paper prices in Shanghai. A $5-7 per ounce arbitrage has emerged between Eastern physical markets and Western paper exchanges.</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">148%</div>
+            <div class="stat-label">Silver's 2025 Gain</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">750M oz</div>
+            <div class="stat-label">Reported JPM Physical Hoard</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">70%</div>
+            <div class="stat-label">Inventory Decline Since 2020</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">$73+</div>
+            <div class="stat-label">Current Price Per Ounce</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 4: THE BAILOUT QUESTION -->
+<section>
+    <div class="section-header">
+        <span class="section-number">04</span>
+        <h2 class="section-title">Will They Get Bailed Out?</h2>
+    </div>
+
+    <div class="content-block">
+        <p>The question on everyone's mind: if major banks face catastrophic losses from their short positions, will the Federal Reserve and government step in to save them—again?</p>
+        <p><span class="silver-text">JPMorgan is classified as a "systemically important" financial institution.</span> In the 2008 financial crisis, such banks were deemed "too big to fail." The precedent exists for extraordinary intervention when major financial institutions face collapse.</p>
+    </div>
+
+    <div class="manipulation-card">
+        <div class="manipulation-header">
+            <h3 class="manipulation-title">The Pattern</h3>
+        </div>
+        <div class="manipulation-body">
+            <p><strong>1980:</strong> When the Hunt Brothers faced $1.7 billion in losses after COMEX changed the rules, a consortium of banks provided a $1.1 billion credit line to prevent market collapse. The brothers were prosecuted; the system was protected.</p>
+            <p><strong>2008:</strong> Major banks received hundreds of billions in bailouts. JPMorgan and Goldman Sachs received TARP funds (later repaid). The Federal Reserve's balance sheet expanded from $800 billion to $1.6 trillion.</p>
+            <p><strong>2020:</strong> The Fed's balance sheet ballooned from $3.4 trillion to $6.1 trillion. Emergency lending facilities proliferated. The precedent for massive intervention is well-established.</p>
+            <p><strong>2025-2026:</strong> Reports of elevated repo lending at year-end. Questions about whether silver-related margin pressures are straining the system. The Fed has demonstrated willingness to act swiftly and massively.</p>
+        </div>
+    </div>
+
+    <div class="content-block">
+        <p>If banks manipulated the silver market for decades, profited from artificial suppression, and now face losses as the manipulation unwinds—should taxpayers be on the hook? Or should the market be allowed to function, even if "systemically important" institutions suffer consequences for their actions?</p>
+        <p>The public deserves to know what's happening. Transparency is essential. The pattern of privatized gains and socialized losses must be challenged.</p>
+    </div>
+</section>
+
+<!-- CALL TO ACTION -->
+<section class="cta-section">
+    <h2 class="cta-title">Spread the Word</h2>
+    <p class="cta-text">An informed public is the only check on financial manipulation. Share this information. Ask questions. Demand transparency. The silver story is everyone's story.</p>
+    
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p class="footer-text">
+        This website presents publicly available information about silver markets and documented regulatory findings. 
+        The CFTC enforcement order against JPMorgan (2020), conviction of traders for spoofing (2023), and historical 
+        price data are matters of public record. Analysis and commentary represent informed opinion. 
+        This is not financial advice. Do your own research.
+    </p>
+</footer>
+
+<script>
+    // Simple scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.content-block, .manipulation-card, .stat-card, .timeline-item').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+
+    // Update price periodically (simulated)
+    const priceEl = document.querySelector('.price-value');
+    const basePrice = 73.56;
+    
+    setInterval(() => {
+        const variance = (Math.random() - 0.5) * 0.5;
+        const newPrice = (basePrice + variance).toFixed(2);
+        priceEl.textContent = '$' + newPrice;
+    }, 5000);
+</script>
+```
+
+</body>
+</html>
