@@ -519,8 +519,8 @@
 ```
     <div class="current-price">
         <div class="price-label">Current Spot Price (Jan 3, 2026)</div>
-        <div class="price-value">$72.22</div>
-        <div class="price-change">▲ +148% in 2025</div>
+        <div class="price-value">$79+</div>
+        <div class="price-change">▲ +172% in 1 YR</div>
     </div>
 
     <div class="scroll-indicator">
@@ -654,7 +654,7 @@
     </div>
 
     <div class="content-block">
-        <p>Something extraordinary happened in 2025. Silver rose <span class="highlight">148%</span>—its best year since 1979. The metal broke through $80 per ounce, smashing through decades of resistance. But the story beneath the surface is even more significant.</p>
+        <p>Something extraordinary happened in 2025. Silver rose <span class="highlight">172%</span>—its best year since 1979. The metal broke through $80 per ounce, smashing through decades of resistance. But the story beneath the surface is even more significant.</p>
         <p>Reports indicate that JPMorgan, after years of being the largest short in the silver market, has reversed position. Between June and October 2025, they reportedly closed their 200-million-ounce paper short position and accumulated 750 million ounces of physical silver—the largest stockpile in history.</p>
     </div>
 
@@ -764,10 +764,10 @@
 
     // Update price periodically (simulated)
     const priceEl = document.querySelector('.price-value');
-    const basePrice = 73.56;
+    const basePrice = 79.56;
     
     setInterval(() => {
-        const variance = (Math.random() - 0.5) * 0.5;
+        const variance = (Math.random() - 0.25) * 0.25;
         const newPrice = (basePrice + variance).toFixed(2);
         priceEl.textContent = '$' + newPrice;
     }, 5000);
